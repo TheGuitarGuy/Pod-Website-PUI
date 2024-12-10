@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/pod-dating/static/css/main.1b09a5cb.css",
+    "main.js": "/pod-dating/static/js/main.903e6a28.js",
+    "static/media/pod-logo-logotype.png": "/pod-dating/static/media/pod-logo-logotype.9428a38af5474c3c1326.png",
+    "static/media/pod-web-bg.png": "/pod-dating/static/media/pod-web-bg.c810052732e94f51cec9.png",
+    "index.html": "/pod-dating/index.html",
+    "main.1b09a5cb.css.map": "/pod-dating/static/css/main.1b09a5cb.css.map",
+    "main.903e6a28.js.map": "/pod-dating/static/js/main.903e6a28.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.1b09a5cb.css",
+    "static/js/main.903e6a28.js"
+  ]
+}
