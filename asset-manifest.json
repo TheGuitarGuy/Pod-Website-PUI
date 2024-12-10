@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/pod-dating/static/css/main.1b09a5cb.css",
-    "main.js": "/pod-dating/static/js/main.903e6a28.js",
-    "static/media/pod-logo-logotype.png": "/pod-dating/static/media/pod-logo-logotype.9428a38af5474c3c1326.png",
-    "static/media/pod-web-bg.png": "/pod-dating/static/media/pod-web-bg.c810052732e94f51cec9.png",
-    "index.html": "/pod-dating/index.html",
-    "main.1b09a5cb.css.map": "/pod-dating/static/css/main.1b09a5cb.css.map",
-    "main.903e6a28.js.map": "/pod-dating/static/js/main.903e6a28.js.map"
+    "main.css": "/Pod-Website-PUI/static/css/main.1b09a5cb.css",
+    "main.js": "/Pod-Website-PUI/static/js/main.312d85dd.js",
+    "static/media/pod-logo-logotype.png": "/Pod-Website-PUI/static/media/pod-logo-logotype.9428a38af5474c3c1326.png",
+    "static/media/pod-web-bg.png": "/Pod-Website-PUI/static/media/pod-web-bg.c810052732e94f51cec9.png",
+    "index.html": "/Pod-Website-PUI/index.html",
+    "main.1b09a5cb.css.map": "/Pod-Website-PUI/static/css/main.1b09a5cb.css.map",
+    "main.312d85dd.js.map": "/Pod-Website-PUI/static/js/main.312d85dd.js.map"
   },
   "entrypoints": [
     "static/css/main.1b09a5cb.css",
-    "static/js/main.903e6a28.js"
+    "static/js/main.312d85dd.js"
   ]
 }
