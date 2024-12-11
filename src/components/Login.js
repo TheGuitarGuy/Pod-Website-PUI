@@ -54,9 +54,6 @@ const Login = () => {
         </div>
         <button type="submit">Login</button>
       </form>
-      <p>
-        Don't have an account? <Link to="/signup">Sign Up</Link> {/* Use Link */}
-      </p>
     </div>
   );
 };
