@@ -1,5 +1,7 @@
+// src/App.js
+
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import EventForm from './components/EventForm';
@@ -12,7 +14,8 @@ function App() {
     <AuthProvider>
       <Router>
         <Routes>
-          <Route path="/login" element={<Login />} />
+          {/* Set Login as the default route */}
+          <Route path="/" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route
             path="/event-form"
@@ -22,7 +25,12 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route
+            path="/dashboard"
+            element={
+                <Dashboard />
+            }
+          />
         </Routes>
       </Router>
     </AuthProvider>

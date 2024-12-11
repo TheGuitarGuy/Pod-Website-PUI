@@ -1,22 +1,40 @@
 // src/hooks/useAuth.js
-import { useEffect, useState, createContext, useContext } from 'react';
-import { auth, onAuthStateChanged } from '../firebaseConfig';
+
+import React, { useContext, useState, useEffect, createContext } from 'react';
+import { auth } from '../firebaseConfig'; // Ensure correct path
+import { onAuthStateChanged } from 'firebase/auth';
 
 const AuthContext = createContext();
 
+// Custom hook to use the AuthContext
+export const useAuth = () => {
+  return useContext(AuthContext);
+};
+
+// AuthProvider component to wrap around your app
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState(undefined); // Initialize as undefined
+  const [loading, setLoading] = useState(true); // To handle async auth state
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, setUser);
-    return () => unsubscribe();
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      console.log("Auth State Changed:", user); // Debugging line
+      setCurrentUser(user);
+      setLoading(false);
+    });
+
+    // Cleanup subscription on unmount
+    return unsubscribe;
   }, []);
 
+  const value = {
+    currentUser,
+    // Add other auth-related functions if needed
+  };
+
   return (
-    <AuthContext.Provider value={{ user }}>
-      {children}
+    <AuthContext.Provider value={value}>
+      {!loading && children} {/* Render children only after loading */}
     </AuthContext.Provider>
   );
 };
-
-export const useAuth = () => useContext(AuthContext);

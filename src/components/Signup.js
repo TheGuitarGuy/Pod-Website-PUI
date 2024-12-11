@@ -1,27 +1,20 @@
 // src/components/Signup.js
 
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom'; // Import Link
 import { auth } from '../firebaseConfig';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import '../styles/styles.css'; // Ensure correct path
-import backgroundImage from '../images/pod-web-bg.png'; // Import the background image
 
 const Signup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState(''); // New state for confirm password
+  const [confirmPassword, setConfirmPassword] = useState('');
   const navigate = useNavigate();
-
-  useEffect(() => {
-    // Set the CSS variable for the background image
-    document.documentElement.style.setProperty('--podWebBg', `url(${backgroundImage})`);
-  }, []);
 
   const handleSignup = async (e) => {
     e.preventDefault();
 
-    // Password confirmation validation
     if (password !== confirmPassword) {
       alert("Passwords do not match. Please try again.");
       return;
@@ -29,7 +22,7 @@ const Signup = () => {
 
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      navigate('/event-form');
+      navigate('/dashboard'); // Navigate to Dashboard after signup
     } catch (error) {
       console.error('Error signing up:', error);
       alert('Error signing up: ' + error.message);
@@ -40,7 +33,7 @@ const Signup = () => {
     <div className="container">
       <h1>Sign Up</h1>
       <form onSubmit={handleSignup}>
-        <div className="form-group">
+        <div className="form-group"> {/* Add class for styling */}
           <label htmlFor="email">Email:</label>
           <input 
             type="email" 
@@ -51,7 +44,7 @@ const Signup = () => {
             placeholder="Enter your email"
           />
         </div>
-        <div className="form-group">
+        <div className="form-group"> {/* Add class for styling */}
           <label htmlFor="password">Password:</label>
           <input 
             type="password" 
@@ -62,8 +55,8 @@ const Signup = () => {
             placeholder="Enter your password"
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="confirmPassword">Confirm Password:</label> {/* New Confirm Password field */}
+        <div className="form-group"> {/* Add class for styling */}
+          <label htmlFor="confirmPassword">Confirm Password:</label>
           <input 
             type="password" 
             id="confirmPassword"
@@ -73,11 +66,9 @@ const Signup = () => {
             placeholder="Confirm your password"
           />
         </div>
-        <button type="submit" className="next-btn">Sign Up</button>
+        <button type="submit">Sign Up</button>
       </form>
-      <p className="download-link">
-        Already have an account? <a href="/login">Login</a>
-      </p>
+      <p>Already have an account? <Link to="/">Login</Link></p> {/* Use Link */}
     </div>
   );
 };

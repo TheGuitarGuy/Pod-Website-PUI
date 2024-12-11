@@ -1,15 +1,19 @@
 // src/components/EventForm.js
 
 import React, { useState, useEffect, useRef } from 'react';
-import { auth, db, storage, onAuthStateChanged, serverTimestamp, Timestamp } from '../firebaseConfig';
+import { auth, db, storage } from '../firebaseConfig';
+import { onAuthStateChanged } from 'firebase/auth';
+import { serverTimestamp, Timestamp } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { collection, doc, setDoc } from 'firebase/firestore';
 import Flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 import '../styles/event-form.css';
-import backgroundImage from '../images/pod-web-bg.png'; // Updated import
+import backgroundImage from '../images/pod-poster-no-code.png';
 import { QRCodeCanvas } from 'qrcode.react';
 import html2canvas from 'html2canvas';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth'; // Import useAuth hook
 
 const EventForm = () => {
   const [form, setForm] = useState({
@@ -25,9 +29,10 @@ const EventForm = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [eventID, setEventID] = useState(null);
   const [photoURL, setPhotoURL] = useState('');
-  const [user, setUser] = useState(null);
   const [qrGenerated, setQrGenerated] = useState(false);
   const posterRef = useRef(null);
+  const navigate = useNavigate();
+  const { currentUser } = useAuth(); // Access currentUser from AuthProvider
 
   const formSteps = [
     { id: 'step1', fields: ['eventName', 'eventInfo'] },
@@ -37,11 +42,6 @@ const EventForm = () => {
     { id: 'step5', fields: ['eventPrice'] },
     { id: 'step6', fields: ['photo'] },
   ];
-
-  useEffect(() => {
-    // Set the CSS variable for the background image
-    document.documentElement.style.setProperty('--podWebBg', `url(${backgroundImage})`);
-  }, []);
 
   useEffect(() => {
     // Initialize Flatpickr for date inputs
@@ -101,20 +101,6 @@ const EventForm = () => {
     }
   }, []);
 
-  useEffect(() => {
-    // Handle user authentication state
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      if (currentUser) {
-        setUser(currentUser);
-      } else {
-        // Redirect to login page if not authenticated
-        window.location.href = '/auth'; // Updated to use React routing
-      }
-    });
-
-    return () => unsubscribe();
-  }, []);
-
   const handleInputChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -126,7 +112,7 @@ const EventForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!user) {
+    if (!currentUser) {
       alert('You must be logged in to create an event.');
       return;
     }
@@ -167,7 +153,7 @@ const EventForm = () => {
         attendeeCount: 0,
         price: form.eventPrice,
         timestamp: serverTimestamp(),
-        createdBy: user.uid, // Optional: Track which user created the event
+        createdBy: currentUser.uid, // Track which user created the event
       };
 
       // Write event data to Firestore
@@ -225,154 +211,142 @@ const EventForm = () => {
     <div className="container">
       <div className="title" id="form-title">Tell us a little about your event</div>
       {!qrGenerated ? (
-        <>
-          <div className="progress-bar" id="progress-bar">
-            {formSteps.map((_, index) => (
-              <div
-                key={index}
-                className={`progress-section ${
-                  index <= currentStep ? 'progress-section-active' : ''
-                }`}
-              ></div>
-            ))}
-          </div>
-          <form onSubmit={handleSubmit} id="eventForm">
-            {formSteps.map((step, index) => (
-              <div
-                key={step.id}
-                className={`form-step ${index === currentStep ? 'form-step-active' : ''}`}
-              >
-                {step.fields.includes('eventName') && (
-                  <div className="form-group">
-                    <label htmlFor="eventName">Event Name</label>
-                    <input
-                      type="text"
-                      id="eventName"
-                      name="eventName"
-                      placeholder="e.g., Annual Tech Conference"
-                      onChange={handleInputChange}
-                      value={form.eventName}
-                      required
-                    />
-                  </div>
-                )}
-                {step.fields.includes('eventInfo') && (
-                  <div className="form-group">
-                    <label htmlFor="eventInfo">Event Info</label>
-                    <textarea
-                      id="eventInfo"
-                      name="eventInfo"
-                      placeholder="Describe your event here..."
-                      onChange={handleInputChange}
-                      value={form.eventInfo}
-                      required
-                    ></textarea>
-                  </div>
-                )}
-                {step.fields.includes('eventStartDate') && (
-                  <div className="form-group">
-                    <label htmlFor="eventStartDate">Start Date</label>
-                    <input
-                      type="text"
-                      id="eventStartDate"
-                      name="eventStartDate"
-                      onChange={handleInputChange}
-                      required
-                    />
-                  </div>
-                )}
-                {step.fields.includes('eventEndDate') && (
-                  <div className="form-group">
-                    <label htmlFor="eventEndDate">End Date</label>
-                    <input
-                      type="text"
-                      id="eventEndDate"
-                      name="eventEndDate"
-                      onChange={handleInputChange}
-                      required
-                    />
-                  </div>
-                )}
-                {step.fields.includes('eventAddress') && (
-                  <div className="form-group">
-                    <label htmlFor="eventAddress">Event Address</label>
-                    <input
-                      type="text"
-                      id="eventAddress"
-                      name="eventAddress"
-                      placeholder="Event address"
-                      onChange={handleInputChange}
-                      value={form.eventAddress}
-                      required
-                    />
-                  </div>
-                )}
-                {step.fields.includes('maxAttendees') && (
-                  <div className="form-group">
-                    <label htmlFor="maxAttendees">Max Attendees</label>
-                    <input
-                      type="number"
-                      id="maxAttendees"
-                      name="maxAttendees"
-                      placeholder="Max attendees"
-                      onChange={handleInputChange}
-                      value={form.maxAttendees}
-                      required
-                    />
-                  </div>
-                )}
-                {step.fields.includes('eventPrice') && (
-                  <div className="form-group">
-                    <label htmlFor="eventPrice">Event Price</label>
-                    <input
-                      type="text"
-                      id="eventPrice"
-                      name="eventPrice"
-                      placeholder="Event price"
-                      onChange={handleInputChange}
-                      value={form.eventPrice}
-                      required
-                    />
-                  </div>
-                )}
-                {step.fields.includes('photo') && (
-                  <div className="form-group">
-                    <label htmlFor="photoURL">Photo</label>
-                    <input
-                      type="file"
-                      id="photoURL"
-                      name="photo"
-                      accept="image/*"
-                      onChange={handleFileChange}
-                    />
-                  </div>
-                )}
-                <div className="button-group">
-                  {index > 0 && (
-                    <button type="button" className="prev-btn" onClick={prevStep} aria-label="Previous Step">
-                      Previous
-                    </button>
-                  )}
-                  {index < formSteps.length - 1 && (
-                    <button type="button" className="next-btn" onClick={nextStep} aria-label="Next Step">
-                      Next
-                    </button>
-                  )}
-                  {index === formSteps.length - 1 && (
-                    <button type="submit" className="create-event-btn" aria-label="Create Event">
-                      Create Event
-                    </button>
-                  )}
+        <form onSubmit={handleSubmit} id="eventForm">
+          {formSteps.map((step, index) => (
+            <div
+              key={step.id}
+              className={`form-step ${index === currentStep ? 'form-step-active' : ''}`}
+            >
+              {step.fields.includes('eventName') && (
+                <div className="form-group">
+                  <label htmlFor="eventName">Event Name</label>
+                  <input
+                    type="text"
+                    id="eventName"
+                    name="eventName"
+                    placeholder="e.g., Annual Tech Conference"
+                    onChange={handleInputChange}
+                    value={form.eventName}
+                    required
+                  />
                 </div>
+              )}
+              {step.fields.includes('eventInfo') && (
+                <div className="form-group">
+                  <label htmlFor="eventInfo">Event Info</label>
+                  <textarea
+                    id="eventInfo"
+                    name="eventInfo"
+                    placeholder="Describe your event here..."
+                    onChange={handleInputChange}
+                    value={form.eventInfo}
+                    required
+                  ></textarea>
+                </div>
+              )}
+              {step.fields.includes('eventStartDate') && (
+                <div className="form-group">
+                  <label htmlFor="eventStartDate">Start Date</label>
+                  <input
+                    type="text"
+                    id="eventStartDate"
+                    name="eventStartDate"
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+              )}
+              {step.fields.includes('eventEndDate') && (
+                <div className="form-group">
+                  <label htmlFor="eventEndDate">End Date</label>
+                  <input
+                    type="text"
+                    id="eventEndDate"
+                    name="eventEndDate"
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+              )}
+              {step.fields.includes('eventAddress') && (
+                <div className="form-group">
+                  <label htmlFor="eventAddress">Event Address</label>
+                  <input
+                    type="text"
+                    id="eventAddress"
+                    name="eventAddress"
+                    placeholder="Event address"
+                    onChange={handleInputChange}
+                    value={form.eventAddress}
+                    required
+                  />
+                </div>
+              )}
+              {step.fields.includes('maxAttendees') && (
+                <div className="form-group">
+                  <label htmlFor="maxAttendees">Max Attendees</label>
+                  <input
+                    type="number"
+                    id="maxAttendees"
+                    name="maxAttendees"
+                    placeholder="Max attendees"
+                    onChange={handleInputChange}
+                    value={form.maxAttendees}
+                    required
+                  />
+                </div>
+              )}
+              {step.fields.includes('eventPrice') && (
+                <div className="form-group">
+                  <label htmlFor="eventPrice">Event Price</label>
+                  <input
+                    type="text"
+                    id="eventPrice"
+                    name="eventPrice"
+                    placeholder="Event price"
+                    onChange={handleInputChange}
+                    value={form.eventPrice}
+                    required
+                  />
+                </div>
+              )}
+              {step.fields.includes('photo') && (
+                <div className="form-group">
+                  <label htmlFor="photoURL">Photo</label>
+                  <input
+                    type="file"
+                    id="photoURL"
+                    name="photoURL"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                  />
+                </div>
+              )}
+              <div className="button-group">
+                {index > 0 && (
+                  <button type="button" className="prev-btn" onClick={prevStep} aria-label="Previous Step">
+                    Previous
+                  </button>
+                )}
+                {index < formSteps.length - 1 && (
+                  <button type="button" className="next-btn" onClick={nextStep} aria-label="Next Step">
+                    Next
+                  </button>
+                )}
+                {index === formSteps.length - 1 && (
+                  <button type="submit" className="create-event-btn" aria-label="Create Event">
+                    Create Event
+                  </button>
+                )}
               </div>
-            ))}
-          </form>
-        </>
+            </div>
+          ))}
+        </form>
       ) : (
         <div className="qr-section">
           <h2>Event Created Successfully!</h2>
           <div ref={posterRef} className="poster-container">
-            <div className="poster-background"></div> {/* Use CSS background */}
+            <img src={backgroundImage} alt="Poster Background" className="poster-background" />
             <div className="qr-code-container">
               <QRCodeCanvas value={eventID} size={160} includeMargin={true} />
             </div>
@@ -382,7 +356,7 @@ const EventForm = () => {
           </button>
           <button 
             className="back-to-dashboard-btn" 
-            onClick={() => window.location.href = '/dashboard'}
+            onClick={() => navigate('/dashboard')} // Use navigate instead of window.location.href
           >
             Back to Dashboard
           </button>

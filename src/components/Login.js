@@ -21,7 +21,7 @@ const Login = () => {
     e.preventDefault();
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      navigate('/event-form');
+      navigate('/dashboard');
     } catch (error) {
       console.error('Error logging in:', error);
       alert('Error logging in: ' + error.message);
