@@ -1,7 +1,5 @@
-// src/components/Login.js
-
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom'; // Import Link
 import { auth } from '../firebaseConfig';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import '../styles/Login.css'; // Ensure correct path
@@ -56,7 +54,9 @@ const Login = () => {
         </div>
         <button type="submit">Login</button>
       </form>
-      <p>Don't have an account? <a href="/signup">Sign Up</a></p>
+      <p>
+        Don't have an account? <Link to="/signup">Sign Up</Link> {/* Use Link */}
+      </p>
     </div>
   );
 };

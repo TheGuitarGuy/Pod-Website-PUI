@@ -78,8 +78,9 @@ const Container = styled.div`
     flex-direction: column;
     font-family: Arial, sans-serif;
     background-color: #f8f9fc;
-    overflow: hidden;
+    /* overflow: hidden; remove this line */
 `;
+
 
 const Header = styled.header`
     display: flex;
@@ -88,16 +89,19 @@ const Header = styled.header`
     background-color: #2d2e83;
     padding: 10px 20px;
     color: white;
-    height: 80px;
+    height: 80px; /* Fixed height instead of clamp */
 
     @media (max-width: 768px) {
-        height: 70px;
+        height: 70px; 
     }
 
     @media (max-width: 480px) {
         height: 60px;
     }
 `;
+
+
+
 
 const Logo = styled.img`
     height: auto;
@@ -166,15 +170,16 @@ const Profile = styled.div`
 
 const Main = styled.main`
     display: grid;
-    grid-template-columns: 2fr 1fr; /* Default proportions for large screens */
+    grid-template-columns: 2fr 1fr;
     grid-template-rows: 1fr;
     grid-template-areas: "bar charts";
     gap: 20px;
     padding: 20px 40px;
-    height: calc(100vh - 80px);
+    flex-grow: 1; /* Allows Main to take available space */
 
+    /* Adjust media queries accordingly */
     @media (max-width: 1024px) {
-        grid-template-columns: 1.5fr 1fr; /* Adjust proportions for smaller screens */
+        grid-template-columns: 1.5fr 1fr;
     }
 
     @media (max-width: 768px) {
@@ -184,7 +189,6 @@ const Main = styled.main`
             "bar"
             "charts";
         gap: 15px;
-        height: auto;
         padding: 15px 20px;
     }
 
@@ -193,6 +197,7 @@ const Main = styled.main`
         padding: 10px 15px;
     }
 `;
+
 
 const BarChartAndMetrics = styled.div`
     grid-area: bar;

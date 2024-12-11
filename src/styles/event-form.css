@@ -10,7 +10,7 @@
 }
 
 body {
-  background: var(--podWebBg);
+  background-image: url('../images/pod-web-bg.png');
   font-family: Helvetica, Arial, sans-serif;
   margin: 0;
   padding: 0;

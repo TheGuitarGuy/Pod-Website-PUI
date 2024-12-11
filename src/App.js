@@ -20,7 +20,7 @@ function App() {
           <Route
             path="/event-form"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute>z
                 <EventForm />
               </ProtectedRoute>
             }
