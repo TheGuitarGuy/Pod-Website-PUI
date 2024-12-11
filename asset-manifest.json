@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/Pod-Website-PUI/static/css/main.c886cb0d.css",
-    "main.js": "/Pod-Website-PUI/static/js/main.175252c8.js",
+    "main.js": "/Pod-Website-PUI/static/js/main.29727c2c.js",
     "static/media/pod-poster-no-code.png": "/Pod-Website-PUI/static/media/pod-poster-no-code.0abf496ea5a27d8e9982.png",
     "static/media/pod-logo-logotype.png": "/Pod-Website-PUI/static/media/pod-logo-logotype.9428a38af5474c3c1326.png",
     "static/media/pod-web-bg.png": "/Pod-Website-PUI/static/media/pod-web-bg.c810052732e94f51cec9.png",
     "index.html": "/Pod-Website-PUI/index.html",
     "main.c886cb0d.css.map": "/Pod-Website-PUI/static/css/main.c886cb0d.css.map",
-    "main.175252c8.js.map": "/Pod-Website-PUI/static/js/main.175252c8.js.map"
+    "main.29727c2c.js.map": "/Pod-Website-PUI/static/js/main.29727c2c.js.map"
   },
   "entrypoints": [
     "static/css/main.c886cb0d.css",
-    "static/js/main.175252c8.js"
+    "static/js/main.29727c2c.js"
   ]
 }
