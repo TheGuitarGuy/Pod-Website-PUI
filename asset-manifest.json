@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/Pod-Website-PUI/static/css/main.c886cb0d.css",
-    "main.js": "/Pod-Website-PUI/static/js/main.29727c2c.js",
+    "main.css": "/Pod-Website-PUI/static/css/main.b809ad15.css",
+    "main.js": "/Pod-Website-PUI/static/js/main.5c513756.js",
     "static/media/pod-poster-no-code.png": "/Pod-Website-PUI/static/media/pod-poster-no-code.0abf496ea5a27d8e9982.png",
     "static/media/pod-logo-logotype.png": "/Pod-Website-PUI/static/media/pod-logo-logotype.9428a38af5474c3c1326.png",
     "static/media/pod-web-bg.png": "/Pod-Website-PUI/static/media/pod-web-bg.c810052732e94f51cec9.png",
     "index.html": "/Pod-Website-PUI/index.html",
-    "main.c886cb0d.css.map": "/Pod-Website-PUI/static/css/main.c886cb0d.css.map",
-    "main.29727c2c.js.map": "/Pod-Website-PUI/static/js/main.29727c2c.js.map"
+    "main.b809ad15.css.map": "/Pod-Website-PUI/static/css/main.b809ad15.css.map",
+    "main.5c513756.js.map": "/Pod-Website-PUI/static/js/main.5c513756.js.map"
   },
   "entrypoints": [
-    "static/css/main.c886cb0d.css",
-    "static/js/main.29727c2c.js"
+    "static/css/main.b809ad15.css",
+    "static/js/main.5c513756.js"
   ]
 }
