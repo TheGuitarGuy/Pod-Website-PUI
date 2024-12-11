@@ -78,9 +78,7 @@ const Container = styled.div`
     flex-direction: column;
     font-family: Arial, sans-serif;
     background-color: #f8f9fc;
-    /* overflow: hidden; remove this line */
 `;
-
 
 const Header = styled.header`
     display: flex;
@@ -216,12 +214,12 @@ const BarChartContainer = styled.div`
     height: 70%;
 
     @media (max-width: 1024px) {
-        max-width: 400px; /* Restrict width starting at 1024px */
+        max-width: 600px; /* Restrict width starting at 1024px */
         margin: 0 auto; /* Center the bar chart */
     }
 
     @media (max-width: 768px) {
-        max-width: 350px; /* Further reduce width for smaller devices */
+       min-width: 600px; /* Further reduce width for smaller devices */
     }
 
     @media (max-width: 480px) {
