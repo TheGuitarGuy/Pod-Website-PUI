@@ -1,6 +1,6 @@
-Deployed website: https://theguitarguy.github.io/pui-homework-e/
+Deployed website: https://theguitarguy.github.io/Pod-Website-PUI/
 
-Repository link: https://github.com/TheGuitarGuy/pui-homework-e
+Repository link: https://github.com/TheGuitarGuy/Pod-Website-PUI
 
 
 
