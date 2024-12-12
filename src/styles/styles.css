@@ -2,7 +2,7 @@
     --darkPink: rgb(208, 45, 208);
     --vidaWhite: rgb(250, 250, 250);
     --vidaBackground: rgb(8, 7, 5);
-    --vidaPink: rgb(167, 0, 75);
+    --vidaPink: rgb(255, 0, 115);
     --vidaOrange: rgb(246, 165, 121);
     --vidaBlue: rgb(14, 202, 242);
     --vidaGray: rgb(108, 117, 125);
@@ -125,11 +125,13 @@ button:hover {
     transform: translate(-50%, -5%);
   }
   
+  .event-text{
+    padding-top: 100px;
+  }
   
   /* Download Poster Button Styles */
   .download-poster-btn {
-    padding: 10px 20px;
-    background-color: var(--vidaBlue);
+    background-color: var(--vidaPurple);
     color: var(--vidaWhite);
     border: none;
     border-radius: 5px;

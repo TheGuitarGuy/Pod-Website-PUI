@@ -344,7 +344,8 @@ const EventForm = () => {
         </form>
       ) : (
         <div className="qr-section">
-          <h2>Event Created Successfully!</h2>
+          <h2 className="event-text">Event created successfully! </h2>
+          <h3 className="event-text">Print or digitally download and display in a noticeable place.</h3>
           <div ref={posterRef} className="poster-container">
             <img src={backgroundImage} alt="Poster Background" className="poster-background" />
             <div className="qr-code-container">
@@ -355,8 +356,8 @@ const EventForm = () => {
             Download Poster
           </button>
           <button 
-            className="back-to-dashboard-btn" 
-            onClick={() => navigate('/dashboard')} // Use navigate instead of window.location.href
+            className="return-to-dashboard-btn" 
+            onClick={() => navigate('/dashboard')} 
           >
             Back to Dashboard
           </button>
